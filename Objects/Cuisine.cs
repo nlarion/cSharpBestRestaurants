@@ -136,6 +136,41 @@ namespace BestRestaurants
       return foundCuisine;
     }
 
+    public void Update(string newName)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE cuisine SET name = @CuisineName OUTPUT INSERTED.name WHERE id = @CuisineId;", conn);
+      SqlParameter cuisineNameParameter = new SqlParameter();
+      cuisineNameParameter.ParameterName = "@CuisineName";
+      cuisineNameParameter.Value = newName;
+      cmd.Parameters.Add(cuisineNameParameter);
+
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(cuisineIdParameter);
+      rdr = cmd.ExecuteReader();
+      
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
