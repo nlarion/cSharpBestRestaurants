@@ -102,6 +102,15 @@ namespace BestRestaurants
       return myListCuisine;
     }
 
+    public static Cuisine Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();
