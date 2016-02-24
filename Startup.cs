@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ToDoList
+namespace BestRestaurants
 {
   public class Startup
   {
@@ -42,7 +42,7 @@ namespace ToDoList
   }
   public static class DBConfiguration
   {
-    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=todo;Integrated Security=SSPI;";
+    public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=restaurant;Integrated Security=SSPI;";
     //public static string ConnectionString = "Data Source=CHIYOKAWA\\SQLEXPRESS;Initial Catalog=todo;Integrated Security=SSPI;";
   }
 }
