@@ -26,19 +26,27 @@ namespace BestRestaurants
     public void Test_SavesRestaurantToDatabase()
     {
       //Arrange
-      Restaurant testRestaurant = new Restaurant("Chipotle", 1, new DateTime(1984, 9, 3));
+      Restaurant testRestaurant = new Restaurant("Chipotle", 1, new DateTime(1984, 9, 3), "In da hood");
       testRestaurant.Save();
 
       //Act
       List<Restaurant> restaurantList = Restaurant.GetAll();
       List<Restaurant> tempList = new List<Restaurant>{testRestaurant};
-
+      // foreach (var coin in restaurantList)
+      // {
+      //   Console.WriteLine(coin.GetCuisineId());
+      // }
+      // foreach (var coin in tempList)
+      // {
+      //   Console.WriteLine(coin.GetCuisineId());
+      // }
       //Assert
-      Assert.Equal(testRestaurant,tempList);
+      Assert.Equal(restaurantList,tempList);
     }
+
     public void Dispose()
     {
-      // Restaurant.DeleteAll();
+      Restaurant.DeleteAll();
       Cuisine.DeleteAll();
     }
   }

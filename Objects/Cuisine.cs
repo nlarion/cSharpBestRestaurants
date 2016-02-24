@@ -153,7 +153,7 @@ namespace BestRestaurants
       cuisineIdParameter.Value = this.GetId();
       cmd.Parameters.Add(cuisineIdParameter);
       rdr = cmd.ExecuteReader();
-      
+
       while(rdr.Read())
       {
         this._name = rdr.GetString(0);
