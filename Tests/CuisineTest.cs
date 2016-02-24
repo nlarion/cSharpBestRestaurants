@@ -59,7 +59,7 @@ namespace BestRestaurants
       Cuisine foundCuisine = Cuisine.Find(testCuisine.GetId());
 
       //Assert
-      Assert.Equal(testCategory, foundCuisine);
+      Assert.Equal(testCuisine, foundCuisine);
     }
 
     public void Dispose()

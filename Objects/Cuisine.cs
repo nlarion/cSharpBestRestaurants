@@ -108,7 +108,32 @@ namespace BestRestaurants
       SqlDataReader rdr = null;
       conn.Open();
 
-      
+      SqlCommand cmd = new SqlCommand("SELECT * FROM cuisine WHERE id = @CuisineId;", conn);
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(cuisineIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      int foundCuisineId = 0;
+      string foundCuisineDescription = null;
+
+      while(rdr.Read())
+      {
+        foundCuisineId = rdr.GetInt32(0);
+        foundCuisineDescription = rdr.GetString(1);
+      }
+      Cuisine foundCuisine = new Cuisine(foundCuisineDescription, foundCuisineId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundCuisine;
     }
 
     public static void DeleteAll()
