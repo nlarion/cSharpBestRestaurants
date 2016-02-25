@@ -23,6 +23,11 @@ namespace BestRestaurants
       Get["/Cuisine/Create"]  = _ => {
         return View["cuisineCreate.cshtml"];
       };
+      Get["/Cuisine/Delete"] = _ => {
+        Cuisine.DeleteAll();
+        return View["cuisine.cshtml",  "delete"];
+      };
+
       Get["/Restaurant"] = _ => {
         return View["restaurant.cshtml", Restaurant.GetAll()];
       };
@@ -35,6 +40,10 @@ namespace BestRestaurants
       Get["/Restaurant/Create"] = _ => {
         List<Cuisine> newCuisine = Cuisine.GetAll();
         return View["restaurantCreate.cshtml", newCuisine];
+      };
+      Get["/Restaurant/Delete"] = _ => {
+        Restaurant.DeleteAll();
+        return View["restaurant.cshtml",  "delete"];
       };
     }
   }

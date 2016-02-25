@@ -2,18 +2,31 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <title></title>
   </head>
   <body>
     <div class="container">
-      <a href="/">Return Home</a>
-      <a href="Restaurant/Create">Add a New Restaurant</a>
+      <a href="/">Return Home</a><br>
+      <a href="/Restaurant/Create">Add a New Restaurant</a><br>
+      <a href="/Restaurant/Delete">Delete All Restaurants</a>
       @{
         if(Model!=null)
         {
-          foreach(var item in Model)
+          if(Model is string)
           {
-            <h3>@item.GetName()</h3>
+            <h3>Successfully Deleted All Restaurants</h3>
+          }
+          else if (Model.Count == 0)
+          {
+            <h3>Please Add a Restaurant</h3>
+          }
+          else
+          {
+            foreach(var item in Model)
+            {
+              <h3>@item.GetName()</h3>
+            }
           }
         }
       }
