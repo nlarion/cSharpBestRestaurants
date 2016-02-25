@@ -20,6 +20,16 @@ namespace BestRestaurants
         newCuisine.Save();
         return View["cuisine.cshtml", Cuisine.GetAll()];
       };
+      Get["/Cuisine/{id}"]  = parameters => {
+        Cuisine newCuisine = Cuisine.Find(parameters.id);
+        List<Cuisine> cuisineList = new List<Cuisine>{};
+        cuisineList.Add(newCuisine);
+        List<Restaurant> restaurantList = Restaurant.FindByCuisine(newCuisine.GetId());
+        Dictionary<string,object> myDictionary = new Dictionary<string,object>{};
+        myDictionary.Add("cuisine",newCuisine);
+        myDictionary.Add("restaurants",restaurantList);
+        return View["cuisineView.cshtml",myDictionary];
+      };
       Get["/Cuisine/Create"]  = _ => {
         return View["cuisineCreate.cshtml"];
       };

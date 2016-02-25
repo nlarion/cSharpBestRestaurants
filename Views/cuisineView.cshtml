@@ -8,25 +8,14 @@
   <body>
     <div class="container">
       <a href="/">Return Home</a><br>
-      <a href="Cuisine/Create">Add a New Cuisine Type</a><br>
-      <a href="/Cuisine/Delete">Delete All Cuisine Types</a>
+      <h1>All Restaurants in @Model["cuisine"].GetName():</h1>
+
       @{
         if(Model!=null)
         {
-          if(Model is string)
+          foreach(var item in Model["restaurants"])
           {
-            <h3>Successfully Deleted All Cuisine</h3>
-          }
-          else if (Model.Count == 0)
-          {
-            <h3>Please Add a Cuisine</h3>
-          }
-          else
-          {
-            foreach(var item in Model)
-            {
-              <h3><a href="/Cuisine/@item.GetId()">@item.GetName()</a></h3>
-            }
+            <h3>@item.GetName()</h3>
           }
         }
       }

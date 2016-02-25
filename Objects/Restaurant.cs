@@ -190,6 +190,49 @@ namespace BestRestaurants
       }
       return foundRestaurant;
     }
+    public static List<Restaurant> FindByCuisine(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      List<Restaurant> myListRestaurant = new List<Restaurant>{};
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM restaurant WHERE cuisineId = @CuisisneId;", conn);
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@CuisisneId";
+      restaurantIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(restaurantIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      int foundRestaurantId = 0;
+      string foundRestaurantName= null;
+      int foundCuisineId = 0;
+      DateTime foundDateTime = new DateTime(2016,1,1);
+      string foundLocation = null;
+
+      while(rdr.Read())
+      {
+        foundRestaurantId = rdr.GetInt32(0);
+        foundRestaurantName = rdr.GetString(1);
+        foundCuisineId = rdr.GetInt32(2);
+        foundDateTime = rdr.GetDateTime(3);
+        foundLocation = rdr.GetString(4);
+        Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundCuisineId, foundDateTime, foundLocation);
+        myListRestaurant.Add(foundRestaurant);
+      }
+
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return myListRestaurant;
+    }
     public void Update(string newName, int newCuisineId, DateTime newDateTime, string newLocation)
     {
       SqlConnection conn = DB.Connection();
