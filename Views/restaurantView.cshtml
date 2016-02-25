@@ -11,22 +11,34 @@
         if(Model != null)
         {
           <h1>Restaurant: @Model["restaurant"].GetName()</h1>
-          <form action="/Restaurant/Update/@Model["restaurant"].GetId()" method="post">
-            <h2>Enter a Restaurant Name: </h2>
-            <input type="text" name="name" value="@Model["restaurant"].GetName()">
-            <h2>Select a Cuisine Type</h2>
-            <select name="cuisine">
-              @foreach(var item in Model["cuisine"])
-              {
-                <option value="@item.GetId()">@item.GetName()</option>
-              }
-            </select>
-            <h2>Enter When The Restaurant Started:</h2>
-            <input type="date" name="date" value="@Model["restaurant"].GetDateTime()">
-            <h2>Enter Restaurant Location:</h2>
-            <input type="text" name="location" value="@Model["restaurant"].GetLocation()">
-            <button type="Submit" name="button">Submit</button>
-          </form>
+          <div class="row">
+            <div class="col-sm-6">
+              <form action="/Restaurant/Update/@Model["restaurant"].GetId()" method="post">
+                <h2>Enter a Restaurant Name: </h2>
+                <input type="text" name="name" value="@Model["restaurant"].GetName()">
+                <h2>Select a Cuisine Type</h2>
+                <select name="cuisine">
+                  @foreach(var item in Model["cuisine"])
+                  {
+                    <option value="@item.GetId()">@item.GetName()</option>
+                  }
+                </select>
+                <h2>Enter When The Restaurant Started:</h2>
+                <input type="date" name="date" value="@Model["restaurant"].GetDateTime()">
+                <h2>Enter Restaurant Location:</h2>
+                <input type="text" name="location" value="@Model["restaurant"].GetLocation()">
+                <button type="Submit" name="button">Submit</button>
+              </form>
+            </div>
+            <div class="col-sm-6">
+              <h2>Properties:</h2>
+              <h3>Name: @Model["restaurant"].GetName()</h3>
+              <h3>Cuisine: @Model["restaurant"].GetCuisineId()</h3>
+              <h3>Date: @Model["restaurant"].GetDateTime()</h3>
+              <h3>Location: @Model["restaurant"].GetLocation()</h3>
+            </div>
+          </div>
+
         }
       }
     </div>

@@ -53,7 +53,6 @@ namespace BestRestaurants
       Get["/Restaurant/{id}"]  = parameters => {
         List<Cuisine> cuisineList = Cuisine.GetAll();
         Restaurant newRestaurant = Restaurant.Find(parameters.id);
-        Console.WriteLine(newRestaurant.GetId());
         Dictionary<string,object> myDictionary = new Dictionary<string,object>{};
         myDictionary.Add("cuisine",cuisineList);
         myDictionary.Add("restaurant",newRestaurant);
@@ -63,6 +62,11 @@ namespace BestRestaurants
         Restaurant newRestaurant = Restaurant.Find(parameters.id);
         DateTime newDateTime = Convert.ToDateTime((string)Request.Form["date"]);
         newRestaurant.Update(Request.Form["name"],Request.Form["cuisine"],newDateTime,Request.Form["location"]);
+        return View["restaurant.cshtml",Restaurant.GetAll()];
+      };
+      Get["/Restaurant/Delete/{id}"]  = parameters => {
+        Restaurant newRestaurant = Restaurant.Find(parameters.id);
+        newRestaurant.Delete();
         return View["restaurant.cshtml",Restaurant.GetAll()];
       };
       Get["/Restaurant/Create"] = _ => {

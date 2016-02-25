@@ -292,5 +292,17 @@ namespace BestRestaurants
       cmd.ExecuteNonQuery();
 
     }
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM restaurant where id = @Id;", conn);
+
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@Id";
+      restaurantIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(restaurantIdParameter);
+      cmd.ExecuteNonQuery();
+    }
   }
 }

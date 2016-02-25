@@ -27,6 +27,7 @@
             foreach(var item in Model)
             {
               <h3><a href="/Restaurant/@item.GetId()">@item.GetName()</a></h3>
+              <h5><a href="/Restaurant/Delete/@item.GetId()">Delete</a></h5>
             }
           }
         }
