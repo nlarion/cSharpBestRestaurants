@@ -26,7 +26,7 @@
           {
             foreach(var item in Model)
             {
-              <h3>@item.GetName()</h3>
+              <h3><a href="/Restaurant/@item.GetId()">@item.GetName()</a></h3>
             }
           }
         }

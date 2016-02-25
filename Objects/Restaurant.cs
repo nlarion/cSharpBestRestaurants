@@ -137,7 +137,7 @@ namespace BestRestaurants
         int cuisineId = rdr.GetInt32(2);
         DateTime dateTime = rdr.GetDateTime(3);
         string location = rdr.GetString(4);
-        Restaurant restaurant = new Restaurant(name, cuisineId, dateTime, location);
+        Restaurant restaurant = new Restaurant(name, cuisineId, dateTime, location, id);
         myListRestaurant.Add(restaurant);
 
       }
@@ -178,7 +178,7 @@ namespace BestRestaurants
         foundDateTime = rdr.GetDateTime(3);
         foundLocation = rdr.GetString(4);
       }
-      Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundCuisineId, foundDateTime, foundLocation);
+      Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundCuisineId, foundDateTime, foundLocation, foundRestaurantId);
 
       if (rdr != null)
       {
@@ -221,8 +221,6 @@ namespace BestRestaurants
         Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundCuisineId, foundDateTime, foundLocation);
         myListRestaurant.Add(foundRestaurant);
       }
-
-
       if (rdr != null)
       {
         rdr.Close();
@@ -239,16 +237,16 @@ namespace BestRestaurants
       SqlDataReader rdr;
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE restaurant SET name = @Name, cuisineId = @CuisineId, date = @Date, location = @Location OUTPUT INSERTED.name, INSERTED.cuisineId, INSERTED.date, INSERTED.location WHERE id = @CuisineId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE restaurant SET name = @Name, cuisineId = @CuisineId, date = @Date, location = @Location OUTPUT INSERTED.name, INSERTED.cuisineId, INSERTED.date, INSERTED.location WHERE id = @Id;", conn);
       SqlParameter restaurantNameParameter = new SqlParameter();
       restaurantNameParameter.ParameterName = "@Name";
       restaurantNameParameter.Value = newName;
       cmd.Parameters.Add(restaurantNameParameter);
 
-      SqlParameter restaurantIdParameter = new SqlParameter();
-      restaurantIdParameter.ParameterName = "@CuisineId";
-      restaurantIdParameter.Value = newCuisineId;
-      cmd.Parameters.Add(restaurantIdParameter);
+      SqlParameter cuisineIdParameter = new SqlParameter();
+      cuisineIdParameter.ParameterName = "@CuisineId";
+      cuisineIdParameter.Value = newCuisineId;
+      cmd.Parameters.Add(cuisineIdParameter);
 
       SqlParameter restaurantDateParameter = new SqlParameter();
       restaurantDateParameter.ParameterName = "@Date";
@@ -259,6 +257,11 @@ namespace BestRestaurants
       restaurantLocationParameter.ParameterName = "@Location";
       restaurantLocationParameter.Value = newLocation;
       cmd.Parameters.Add(restaurantLocationParameter);
+
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@Id";
+      restaurantIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(restaurantIdParameter);
 
       rdr = cmd.ExecuteReader();
 

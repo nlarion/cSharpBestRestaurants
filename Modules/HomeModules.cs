@@ -50,6 +50,21 @@ namespace BestRestaurants
         newRestaurant.Save();
         return View["restaurant.cshtml",Restaurant.GetAll()];
       };
+      Get["/Restaurant/{id}"]  = parameters => {
+        List<Cuisine> cuisineList = Cuisine.GetAll();
+        Restaurant newRestaurant = Restaurant.Find(parameters.id);
+        Console.WriteLine(newRestaurant.GetId());
+        Dictionary<string,object> myDictionary = new Dictionary<string,object>{};
+        myDictionary.Add("cuisine",cuisineList);
+        myDictionary.Add("restaurant",newRestaurant);
+        return View["restaurantView.cshtml",myDictionary];
+      };
+      Post["/Restaurant/Update/{id}"]  = parameters => {
+        Restaurant newRestaurant = Restaurant.Find(parameters.id);
+        DateTime newDateTime = Convert.ToDateTime((string)Request.Form["date"]);
+        newRestaurant.Update(Request.Form["name"],Request.Form["cuisine"],newDateTime,Request.Form["location"]);
+        return View["restaurant.cshtml",Restaurant.GetAll()];
+      };
       Get["/Restaurant/Create"] = _ => {
         List<Cuisine> newCuisine = Cuisine.GetAll();
         return View["restaurantCreate.cshtml", newCuisine];
