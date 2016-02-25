@@ -190,7 +190,7 @@ namespace BestRestaurants
       }
       return foundRestaurant;
     }
-    public static List<Restaurant> FindByCuisine(int id)
+    public static List<Restaurant> FindByCuisineId(int id)
     {
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;

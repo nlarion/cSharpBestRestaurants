@@ -8,11 +8,15 @@
   <body>
     <div class="container">
       <a href="/">Return Home</a><br>
-      <h1>All Restaurants in @Model["cuisine"].GetName():</h1>
-
       @{
         if(Model!=null)
         {
+          <h1>Cuisine: @Model["cuisine"].GetName()</h1>
+          <form class="" action="/Cuisine/Update/@Model["cuisine"].GetId()" method="post">
+            <input type="text" name="name">
+            <button type="Submit" name="button">Update Cuisine Name</button>
+          </form>
+          <h2>All Restaurants in @Model["cuisine"].GetName():</h2>
           foreach(var item in Model["restaurants"])
           {
             <h3>@item.GetName()</h3>
