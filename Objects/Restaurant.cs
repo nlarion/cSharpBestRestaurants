@@ -40,7 +40,7 @@ namespace BestRestaurants
     {
       return _id;
     }
-    public void SetId()
+    public void SetId(int id)
     {
       _id = id;
     }
@@ -189,6 +189,54 @@ namespace BestRestaurants
         conn.Close();
       }
       return foundRestaurant;
+    }
+    public void Update(string newName, int newCuisineId, DateTime newDateTime, string newLocation)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE restaurant SET name = @Name, cuisineId = @CuisineId, date = @Date, location = @Location OUTPUT INSERTED.name, INSERTED.cuisineId, INSERTED.date, INSERTED.location WHERE id = @CuisineId;", conn);
+      SqlParameter restaurantNameParameter = new SqlParameter();
+      restaurantNameParameter.ParameterName = "@Name";
+      restaurantNameParameter.Value = newName;
+      cmd.Parameters.Add(restaurantNameParameter);
+
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@CuisineId";
+      restaurantIdParameter.Value = newCuisineId;
+      cmd.Parameters.Add(restaurantIdParameter);
+
+      SqlParameter restaurantDateParameter = new SqlParameter();
+      restaurantDateParameter.ParameterName = "@Date";
+      restaurantDateParameter.Value = newDateTime;
+      cmd.Parameters.Add(restaurantDateParameter);
+
+      SqlParameter restaurantLocationParameter = new SqlParameter();
+      restaurantLocationParameter.ParameterName = "@Location";
+      restaurantLocationParameter.Value = newLocation;
+      cmd.Parameters.Add(restaurantLocationParameter);
+
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+        this._cuisineId = rdr.GetInt32(1);
+        this._date = rdr.GetDateTime(2);
+        this._location = rdr.GetString(3);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+
     }
     public static void DeleteAll()
     {

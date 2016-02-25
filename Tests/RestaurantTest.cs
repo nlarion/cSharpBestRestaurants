@@ -48,7 +48,7 @@ namespace BestRestaurants
       Restaurant testRestaurant = new Restaurant("Chipotle", 1, new DateTime(1984, 9, 3), "In da hood");
       testRestaurant.Save();
       //Act
-      Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetCuisineId());
+      Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
       //Assert
       Assert.Equal(testRestaurant, foundRestaurant);
     }
@@ -61,7 +61,7 @@ namespace BestRestaurants
       testRestaurant.Save();
       //Act
       testRestaurant.Update("Starbucks", 1, new DateTime(3030, 9, 3), "Portland");
-      Restaurant otherRestaurant = new Restaurant("Starbucks", 1, new DateTime(3030, 9, 3), "Portland");
+      Restaurant otherRestaurant = Restaurant.Find(testRestaurant.GetId());
       //Assert
       Assert.Equal(testRestaurant, otherRestaurant);
     }
