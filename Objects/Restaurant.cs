@@ -36,6 +36,14 @@ namespace BestRestaurants
         return (nameEquals && idEquals && dateEquals && locationEquals);
       }
     }
+    public int GetId()
+    {
+      return _id;
+    }
+    public void SetId()
+    {
+      _id = id;
+    }
     public string GetName()
     {
       return _name;
@@ -142,6 +150,45 @@ namespace BestRestaurants
         conn.Close();
       }
       return myListRestaurant;
+    }
+    public static Restaurant Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM restaurant WHERE id = @RestaurantId;", conn);
+      SqlParameter restaurantIdParameter = new SqlParameter();
+      restaurantIdParameter.ParameterName = "@RestaurantId";
+      restaurantIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(restaurantIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      int foundRestaurantId = 0;
+      string foundRestaurantName= null;
+      int foundCuisineId = 0;
+      DateTime foundDateTime = new DateTime(2016,1,1);
+      string foundLocation = null;
+
+      while(rdr.Read())
+      {
+        foundRestaurantId = rdr.GetInt32(0);
+        foundRestaurantName = rdr.GetString(1);
+        foundCuisineId = rdr.GetInt32(2);
+        foundDateTime = rdr.GetDateTime(3);
+        foundLocation = rdr.GetString(4);
+      }
+      Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundCuisineId, foundDateTime, foundLocation);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundRestaurant;
     }
     public static void DeleteAll()
     {
