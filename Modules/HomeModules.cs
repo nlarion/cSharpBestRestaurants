@@ -33,6 +33,11 @@ namespace BestRestaurants
         newCuisine.Update(Request.Form["name"]);
         return View["cuisine.cshtml",Cuisine.GetAll()];
       };
+      Get["/Cuisine/Delete/{id}"]  = parameters => {
+        Cuisine newCuisine = Cuisine.Find(parameters.id);
+        newCuisine.Delete();
+        return View["cuisine.cshtml",Cuisine.GetAll()];
+      };
       Get["/Cuisine/Create"]  = _ => {
         return View["cuisineCreate.cshtml"];
       };
